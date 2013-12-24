@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/shimaore/node-rtc-peer-connection/issues"
   },
-  "homepage": "https://github.com/shimaore/node-rtc-peer-connection"
+  "homepage": "https://github.com/shimaore/node-rtc-peer-connection",
+  "dependencies": {
+    "sdp": "~0.3.1",
+    "rtc-session-description": "0.0.1"
+  }
 }
