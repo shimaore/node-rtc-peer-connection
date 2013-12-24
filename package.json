@@ -1,0 +1,19 @@
+{
+  "name": "rtc-peer-connection",
+  "version": "0.0.0",
+  "description": "RTCPeerConnection for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shimaore/node-rtc-peer-connection.git"
+  },
+  "author": "Stéphane Alnet <stephane@shimaore.net> (http://shimaore.net/)",
+  "license": "unlicense",
+  "bugs": {
+    "url": "https://github.com/shimaore/node-rtc-peer-connection/issues"
+  },
+  "homepage": "https://github.com/shimaore/node-rtc-peer-connection"
+}
