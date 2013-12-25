@@ -4,6 +4,9 @@ module.exports = (function(){
   var SDP = require('sdp');
 
   var RTCPeerConnection = function(configuration,constraints) {
+    this.configuration = configuration;
+    this.constraints = constraints;
+
     this.localDescription = null; // a RTCSessionDescription
     this.remoteDescription = null; // a RTCSessionDescription
 
@@ -27,11 +30,6 @@ module.exports = (function(){
   };
 
   RTCPeerConnection.prototype = {
-
-    sdpOffer: null, // sdpOffer(success,failure) must be implemented by a descendant
-    sdpAnswer: null, // sdpAnswer(success,failure)
-    setLocalSession: null, // setLocalSession(session,success,failure)
-    setRemoteSession: null, // setRemoteSession(session,success,failure)
 
     localSDPSession: function() {
       // generate SDP: complete set (since this is an offer)
