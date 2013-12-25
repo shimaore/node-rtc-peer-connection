@@ -33,21 +33,37 @@ module.exports = (function(){
     setLocalSession: null, // setLocalSession(session,success,failure)
     setRemoteSession: null, // setRemoteSession(session,success,failure)
 
+    localSDPSession: function() {
+      // generate SDP: complete set (since this is an offer)
+      var session = new SDP.Session({
+        origin: {
+          username: 'RTCPeerConnection',
+          sessionID: this.id,
+          sessionVersion: 1,
+          netType: 'IN',
+          addrType: 'IP4',
+          address: config.signalling.address
+        },
+        media: [this._localStreamSet.map(function(m) { return m.description(); })]
+      });
+      return session;
+    },
+
     createOffer: function(success,failure,constraints) {
       // generate SDP: complete set (since this is an offer)
-      this.sdpOffer(function(session) {
-        var sdp = new RTCSessionDescription({type:'offer',sdp:session.toSDP});
-        success(sdp);
-      },failure);
+      this.id = new uuid();
+      var session = this.localSDPSession();
+      var sdp = new RTCSessionDescription({type:'offer',sdp:session.toSDP});
+      success(sdp);
     },
 
     createAnswer: function(success,failure,constraints) {
       // generate SDP: restricted set (since this is an answer)
-      this.sdpAnswer(function(session) {
-        // See http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/ for 'answer' vs 'pranswer'
-        var sdp = new RTCSessionDescription({type:'answer',sdp:session.toSDP});
-        success(sdp);
-      },failure);
+      this.id = new uuid();
+      var session = this.localSDPSession();
+      // See http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/ for 'answer' vs 'pranswer'
+      var sdp = new RTCSessionDescription({type:'answer',sdp:session.toSDP});
+      success(sdp);
     },
 
     setLocalDescription: function(description,success,failure) {
