@@ -274,7 +274,10 @@ module.exports = (function(){
       }
       // Destroy the RTCPeerConnection ICE Agent, abruptly ending any active ICE processing and any active streaming, and releasing any relevant resources (e.g. TURN permissions).
       // ICE not supported
-      // FIXME: stop active streaming
+
+      // stop active streaming
+      this._localStreamSet.map( function(m) { m.stop(); });
+      this._remoteStreamSet.map( function(m) { m.stop(); });
 
       // Set the object's RTCPeerConnection signalingState to closed.
       this.signalingState = 'closed';
