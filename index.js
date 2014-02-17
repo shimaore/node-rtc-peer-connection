@@ -52,7 +52,7 @@ module.exports = (function(){
       // generate SDP: complete set (since this is an offer)
       this.id = new uuid();
       var session = this.localSDPSession();
-      var sdp = new RTCSessionDescription({type:'offer',sdp:session.toSDP});
+      var sdp = new RTCSessionDescription({type:'offer',sdp:session.toSDP()});
       success(sdp);
     },
 
@@ -61,7 +61,7 @@ module.exports = (function(){
       this.id = new uuid();
       var session = this.localSDPSession();
       // See http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/ for 'answer' vs 'pranswer'
-      var sdp = new RTCSessionDescription({type:'answer',sdp:session.toSDP});
+      var sdp = new RTCSessionDescription({type:'answer',sdp:session.toSDP()});
       success(sdp);
     },
 
