@@ -35,6 +35,19 @@ module.exports = (function(){
     localSDPSession: function() {
       // generate SDP: complete set (since this is an offer)
       var session = new SDP.Session({
+        var media = [];
+        // Flattens media and tracks. This should use RFC3388 instead.
+        this._localStreamSet.forEach(function(m) {
+          var d = m.description();
+          if(d.length) {
+            d.forEach(function(track) {
+              media.push(track);
+            });
+          } else {
+            media.push(d);
+          }
+        });
+
         origin: {
           username: 'RTCPeerConnection',
           sessionID: this.id,
@@ -43,7 +56,7 @@ module.exports = (function(){
           addrType: 'IP4',
           address: (this.configuration.signalling ? this.configuration.signalling.address : null) || '127.0.0.1'
         },
-        media: [this._localStreamSet.map(function(m) { return m.description(); })]
+        media: media
       });
       return session;
     },
