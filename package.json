@@ -1,6 +1,6 @@
 {
   "name": "rtc-peer-connection",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "RTCPeerConnection for Node.js",
   "main": "index.js",
   "scripts": {
