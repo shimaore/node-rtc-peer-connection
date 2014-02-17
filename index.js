@@ -41,7 +41,7 @@ module.exports = (function(){
           sessionVersion: 1,
           netType: 'IN',
           addrType: 'IP4',
-          address: config.signalling.address
+          address: this.configuration.signalling.address
         },
         media: [this._localStreamSet.map(function(m) { return m.description(); })]
       });
