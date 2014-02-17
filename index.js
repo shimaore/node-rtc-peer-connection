@@ -87,7 +87,7 @@ module.exports = (function(){
       // If a local description contains a different set of ICE credentials, then the ICE Agent MUST trigger an ICE restart.
       // Not-supported.
 
-      var session = SDP.parse(description,this._localSession);
+      var session = SDP.parse(description.sdp,this._localSession);
 
       if(!session) {
         if(this.signalingState !== 'closed') {
