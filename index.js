@@ -2,6 +2,7 @@ module.exports = (function(){
 
   var RTCSessionDescription = require('rtc-session-description');
   var SDP = require('sdp');
+  var uuid = require('uuid');
 
   var RTCPeerConnection = function(configuration,constraints) {
     this.configuration = configuration;
