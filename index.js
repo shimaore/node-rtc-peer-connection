@@ -81,11 +81,13 @@ module.exports = (function(){
 
     setLocalSession: function(session,success,failure) {
       // FIXME: Should negotiate SDP content.
+      this._localSession = session;
       success();
     },
 
     setRemoteSession: function(session,success,failure) {
       // FIXME: Should negotiate SDP content.
+      this._remoteSession = session;
       success();
     },
 
