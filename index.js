@@ -79,6 +79,16 @@ module.exports = (function(){
       success(sdp);
     },
 
+    setLocalSession: function(session,success,failure) {
+      // FIXME: Should negotiate SDP content.
+      success();
+    },
+
+    setRemoteSession: function(session,success,failure) {
+      // FIXME: Should negotiate SDP content.
+      success();
+    },
+
     setLocalDescription: function(description,success,failure) {
       // If this RTCPeerConnection object's signaling state is closed, the user agent MUST throw an InvalidStateError exception and abort this operation.
       if(this.signalingState === 'closed') {
