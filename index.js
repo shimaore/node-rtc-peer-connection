@@ -92,6 +92,7 @@ module.exports = (function(){
     },
 
     setLocalDescription: function(description,success,failure) {
+      var self = this;
       // If this RTCPeerConnection object's signaling state is closed, the user agent MUST throw an InvalidStateError exception and abort this operation.
       if(this.signalingState === 'closed') {
         throw new InvalidStateError();
@@ -111,59 +112,59 @@ module.exports = (function(){
         session,
         function() {
           // If connection's signaling state is closed, then abort these steps.
-          if(this.signalingState === 'closed') {
+          if(self.signalingState === 'closed') {
             return
           }
           // Set connection's description attribute (localDescription or remoteDescription depending on the setting operation) to the RTCSessionDescription argument.
-          this.localDescription = description;
-          this._localSession = session;
+          self.localDescription = description;
+          self._localSession = session;
 
           // If the local description was set, connection's ice gathering state is new, and the local description contains media, then set connection's ice gathering state to gathering.
           // If the local description was set with content that caused an ICE restart, then set connection's ice gathering state to gathering.
-          if(this.iceGatheringState === 'new') {
-            this.iceGatheringState = 'gathering';
+          if(self.iceGatheringState === 'new') {
+            self.iceGatheringState = 'gathering';
           }
 
           // Set connection's signalingState accordingly.
-          switch(this.signalingState + '.' + description.type) {
+          switch(self.signalingState + '.' + description.type) {
             case 'stable.answer':
-              this.signalingState = 'have-local-offer';
+              self.signalingState = 'have-local-offer';
               break;
             case 'have-local-offer.offer':
               // same state
               break;
             case 'have-remote-offer.answer':
-              this.signalingState = 'stable';
+              self.signalingState = 'stable';
               break;
             case 'have-remote-offer.pranswer':
-              this.signalingState = 'have-local-pranswer';
+              self.signalingState = 'have-local-pranswer';
               break;
             case 'have-local-pranswer.pranswer':
               // same state
               break;
             case 'have-local-pranswer.answer':
-              this.signalingState = 'stable';
+              self.signalingState = 'stable';
               break;
             // other state transitions are invalid, actually
           }
 
           // Fire a simple event named signalingstatechange at connection.
-          if(this.onsignalingstatechange) {
-            this.onsignalingstatechange({}); // FIXME: Event
+          if(self.onsignalingstatechange) {
+            self.onsignalingstatechange({}); // FIXME: Event
           }
           // Queue a new task that, if connection's signalingState is not closed, invokes the successCallback.
-          if(this.signalingState !== 'closed') {
+          if(self.signalingState !== 'closed') {
             success();
           }
 
           // EXTRA: Simulate ICE gathering process is done:
-          this.iceGatheringState = 'completed';
-          if(this.onicecandidate) {
-            this.onicecandidate({ candidate: null }); // FIXME candidate
+          self.iceGatheringState = 'completed';
+          if(self.onicecandidate) {
+            self.onicecandidate({ candidate: null }); // FIXME candidate
           }
         },
         function() {
-          if(this.signalingState !== 'closed') {
+          if(self.signalingState !== 'closed') {
             failure({name:' IncompatibleSessionDescriptionError'});
           }
         }
@@ -171,6 +172,7 @@ module.exports = (function(){
     },
 
     setRemoteDescription: function(description,success,failure) {
+      var self = this;
       // If this RTCPeerConnection object's signaling state is closed, the user agent MUST throw an InvalidStateError exception and abort this operation.
       if(this.signalingState === 'closed') {
         throw new InvalidStateError();
@@ -189,47 +191,47 @@ module.exports = (function(){
         session,
         function() {
           // If connection's signaling state is closed, then abort these steps.
-          if(this.signalingState === 'closed') {
+          if(self.signalingState === 'closed') {
             return
           }
           // Set connection's description attribute (localDescription or remoteDescription depending on the setting operation) to the RTCSessionDescription argument.
-          this.remoteDescription = description;
-          this._remoteSession = session;
+          self.remoteDescription = description;
+          self._remoteSession = session;
 
           // Set connection's signalingState accordingly.
-          switch(this.signalingState + '.' + description.type) {
+          switch(self.signalingState + '.' + description.type) {
             case 'stable.offer':
-              this.signalingState = 'have-remote-offer';
+              self.signalingState = 'have-remote-offer';
               break;
             case 'have-remote-offer.offer':
               // same state
               break;
             case 'have-local-offer.answer':
-              this.signalingState = 'stable';
+              self.signalingState = 'stable';
               break;
             case 'have-local-offer.pranswer':
-              this.signalingState = 'have-remote-pranswer';
+              self.signalingState = 'have-remote-pranswer';
               break;
             case 'have-remote-pranswer.pranswer':
               // same state
               break;
             case 'have-remote-pranswer.answer':
-              this.signalingState = 'stable';
+              self.signalingState = 'stable';
               break;
             // other state transitions are invalid, actually
           }
 
           // Fire a simple event named signalingstatechange at connection.
-          if(this.onsignalingstatechange) {
-            this.onsignalingstatechange({}); // FIXME: Event
+          if(self.onsignalingstatechange) {
+            self.onsignalingstatechange({}); // FIXME: Event
           }
           // Queue a new task that, if connection's signalingState is not closed, invokes the successCallback.
-          if(this.signalingState !== 'closed') {
+          if(self.signalingState !== 'closed') {
             success();
           }
         },
         function() {
-          if(this.signalingState !== 'closed') {
+          if(self.signalingState !== 'closed') {
             failure({name:' IncompatibleSessionDescriptionError'});
           }
         }
