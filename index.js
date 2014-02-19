@@ -177,7 +177,7 @@ module.exports = (function(){
       }
 
       // FIXME: should we accumulate like this?
-      var session = SDP.parse(description,this._remoteSession);
+      var session = SDP.parse(description.sdp,this._remoteSession);
 
       if(!session) {
         if(this.signalingState !== 'closed') {
