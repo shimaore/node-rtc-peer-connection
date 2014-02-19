@@ -159,7 +159,7 @@ module.exports = (function(){
           // EXTRA: Simulate ICE gathering process is done:
           this.iceGatheringState = 'completed';
           if(this.onicecandidate) {
-            this.onicecandidate(null);
+            this.onicecandidate({candidate:[]}); // FIXME candidate
           }
         },
         function() {
