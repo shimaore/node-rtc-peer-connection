@@ -2,12 +2,12 @@ module.exports = (function(){
 
   var RTCSessionDescription = require('rtc-session-description');
   var SDP = require('sdp');
-  var uuid = require('uuid');
 
   var RTCPeerConnection = function(configuration,constraints) {
     this.configuration = configuration;
     this.constraints = constraints;
 
+    this.id = (new Date()).valueOf();
     this.localDescription = null; // a RTCSessionDescription
     this.remoteDescription = null; // a RTCSessionDescription
 
@@ -64,7 +64,6 @@ module.exports = (function(){
 
     createOffer: function(success,failure,constraints) {
       // generate SDP: complete set (since this is an offer)
-      this.id = new uuid();
       var session = this.localSDPSession();
       var sdp = new RTCSessionDescription({type:'offer',sdp:session.toSDP()});
       success(sdp);
@@ -72,7 +71,6 @@ module.exports = (function(){
 
     createAnswer: function(success,failure,constraints) {
       // generate SDP: restricted set (since this is an answer)
-      this.id = new uuid();
       var session = this.localSDPSession();
       // See http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/ for 'answer' vs 'pranswer'
       var sdp = new RTCSessionDescription({type:'answer',sdp:session.toSDP()});
