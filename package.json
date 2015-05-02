@@ -11,7 +11,7 @@
     "url": "https://github.com/shimaore/node-rtc-peer-connection.git"
   },
   "author": "Stéphane Alnet <stephane@shimaore.net> (http://shimaore.net/)",
-  "license": "unlicense",
+  "license": "Unlicense",
   "bugs": {
     "url": "https://github.com/shimaore/node-rtc-peer-connection/issues"
   },
